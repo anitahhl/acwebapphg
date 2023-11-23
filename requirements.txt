@@ -1,6 +1,5 @@
 numpy
 Pillow
-piexif
 
 torch
 torchvision
