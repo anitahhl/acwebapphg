@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Transfer</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='/icons/icon.png') }}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap" rel="stylesheet">
+</head>
+
+<body class="min-h-screen bg-white md:bg-gray-100 py-6 flex flex-col justify-center md:py-12" style="font-family: 'Comfortaa', cursive;">
+    <div class="relative py-3 px-4 sm:px-0 sm:max-w-lg w-full sm:mx-auto">
+        <div class="relative px-3 py-4 bg-white rounded-2xl w-full md:p-20 items-center">
+            <!-- Heading with logo -->
+            <div class="flex flex-col space-y-2 items-center">
+                <div class="flex flex-col items-center justify-center">
+                    <img class="h-11 w-11" src="{{ url_for('static', path='/icons/icon.png') }}" alt="logo">
+                    <div class="text-2xl font-bold text-black pt-5">STYLE TRANSFER</div>
+                    <small class="text-gray-400 text-sm font-light">Web App Demo</small>
+                </div>
+            </div>
+
+            <!-- Center Body Part -->
+            <div class="py-6 justify-center items-center max-w-sm">
+
+                {%if not result%}
+                <form action="/" enctype="multipart/form-data" method="post" class="space-y-4 flex flex-col max-w-sm justify-center items-center">
+                    
+                    <!-- Preview image -->
+                    <div class="flex flex-col space-y-2 items-center">
+                        <img id="preview-img" class="max-h-96 max-w-96 rounded shadow-sm" src="{{ url_for('static', path='/images/content-images/mountain.jpg') }}" alt="Example">
+                    </div>
+
+                    <span>
+                        <label for="style_index">Select a Style: &nbsp</label>
+                        <select id="style_index" name="style_index" class="focus:outline-none rounded-none bg-white border-b border-black px-5 py-2 transition-all cursor-pointer">
+                            <!--<option value="0">Bicentennial Print</option>-->
+                            <option value="1">Bottles</option>
+                            <!--<option value="2">Cassis</option>
+                            <option value="3">Colors</option>
+                            <option value="4">Crucifixion</option>
+                            <option value="5">Edith</option>-->
+                            <option value="6">Eutrophication</option>
+                            <!--<option value="7">Clown</option>
+                            <option value="8">Rouen Cathedral</option>
+                            <option value="9">Sunrise</option>
+                            <option value="10">Scream</option>
+                            <option value="11">Starry Night</option>
+                            <option value="12">Fishing Boats</option>
+                            <option value="13">Vétheuil</option>
+                            <option value="14">Victory</option>
+                            <option value="15">Zig Zags</option>-->
+                        </select>
+                    </span>
+                  
+                    <span class="flex space-x-2 w-full">
+                        <label onchange="load(event,'preview-img')"
+                            class="text-center flex-auto h-10 border border-black hover:bg-gray-100 rounded-full py-2 transition-all cursor-pointer">
+                            <span>Upload an Image</span>
+    
+                            <input type='file' class="hidden" name="file" accept="image/*" />
+                        </label>
+                      
+                        <input class="flex-auto h-10 bg-black rounded-full py-2 text-white border border-black hover:bg-gray-800 transition-all cursor-pointer"
+                            type="submit" value="Start">
+                    </span>
+                </form>
+
+                {% else %}
+                <div class="py-4 space-y-3 flex flex-col items-center">
+                    {% if result %}
+                    <div id="result-img" class="flex flex-col space-y-2 items-center">
+                        <img class="max-h-96 max-w-96 rounded shadow-sm" src="{{result}}" alt="Transfer Result">
+                    </div>
+
+                    <input type="Button" value="Reload" onClick="window.location.replace(location.href);" class="bg-black rounded-full px-10 py-2 text-white border border-black hover:bg-gray-800 transition-all cursor-pointer h-10">
+                    {% endif %}
+                </div>
+                {% endif %}
+
+
+                {% if error %}
+                    <p class="text-sm text-gray-400 text-center pt-2 capitalize">Error: {{error}}</p>
+                {% endif %}
+            </div>
+            <div class="mt-3">
+                <div class="items-center flex flex-shrink-0 justify-center">
+                    <span class="font-small text-black">Made with ♡ by ANI</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    load = function (event, id) {
+        var file = event.target.files[0];
+        var img = document.getElementById(id);
+        img.src = URL.createObjectURL(file);
+    };
+</script>
+
+</html> 
