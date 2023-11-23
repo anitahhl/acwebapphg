@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from PIL import Image, ImageOps
 from io import BytesIO
+import uvicorn
 import base64
 import style
 
