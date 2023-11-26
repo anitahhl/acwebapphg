@@ -8,12 +8,16 @@ from transformer_net import StyleTransferNetwork
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def load_model(model_path):
-    print('load model')
-    ckpt = torch.load('./static/model.ckpt', map_location=device)
-    model = StyleTransferNetwork()
-    model.load_state_dict(ckpt['state_dict'])
-    model.eval()
-    return model
+    try:
+        ckpt = torch.load('./static/model.ckpt', map_location=device)
+        model = StyleTransferNetwork()
+        model.load_state_dict(ckpt['state_dict'])
+        model.eval()
+        return model
+
+    except Exception as ex:
+        print(ex)
+    
 
 
 def stylize(_style_model, style_index, content_image, output_image):
